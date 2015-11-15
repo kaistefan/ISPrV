@@ -8,63 +8,64 @@ import java.util.Random;
 
 public class Praktikas {
 	int anzahlStud =80;
-	int anzPr = ((int)Math.round(anzahlStud/12.0d))*3;
-	List<Student> studierende;
+	int anzPr = ((int)Math.round(anzahlStud/12.0d));
+	List<Student> einF;
 	List<Student> dreiF;
 	List<Student> zweiF;
-	List<Student> fachA;
-	List<Student> fachB;
-	List<Student> fachC;
 	Fach a;
 	Fach b;
 	Fach c;
 	
 	Praktikas(){
+		
+	}
+
+	public void generat (){
 		Random random = new Random();
 		random.nextDouble();
 		double zufall;
 		int anzF=0;
-		studierende=new LinkedList<Student>();
-		fachA=new LinkedList<Student>();
-		fachB=new LinkedList<Student>();
-		fachC=new LinkedList<Student>();
+		einF=new LinkedList<Student>();
 		zweiF=new LinkedList<Student>();
 		dreiF=new LinkedList<Student>();
 		List<Student> ohneF =new LinkedList<Student>();
+		a=new Fach(anzPr);
+		b=new Fach(anzPr);
+		c=new Fach(anzPr);
 		/*
 		 * Erzeugung aller Studierende
 		 */
 		for(int i =0;i<anzahlStud;i++){
 			Student studt =new Student(i+1);
-			studt.praktikas= new Praktikum[anzPr];
-			studierende.add(studt);
+			studt.praktikas= new Praktikum[anzPr*3];
+			einF.add(studt);
 			/*
 			 * Erzeugung der beziehungen der Studiernden
 			 */
 			for(int j =0;j<i;j++){
 				zufall = Math.round(100.0 * random.nextDouble()) / 100.0;
 				studt.beziehungen.put(j+1, zufall);
-				studierende.get(j).beziehungen.put(i+1, zufall);
+				einF.get(j).beziehungen.put(i+1, zufall);
 			}
 		}
 		/*
 		 * Verteilung der Fächer
 		 */
-		for(Student stud :studierende){
+		for(Student stud :einF){
 			zufall = Math.round(100.0 * random.nextDouble()) / 100.0;
 			if(zufall<0.8){
 				anzF++;
-				fachA.add(stud);
+				stud.faecher[0]= a;;
 			}
 			zufall = Math.round(100.0 * random.nextDouble()) / 100.0;
 			if(zufall<0.9){
 				anzF++;
-				fachB.add(stud);
+				stud.faecher[1]= b;;
 			}
 			zufall = Math.round(100.0 * random.nextDouble()) / 100.0;
 			if(zufall<0.85){
 				anzF++;
-				fachC.add(stud);
+				stud.faecher[2]= c;;
 			}
 			switch (anzF){
 			case  2: zweiF.add(stud);break; 
@@ -74,9 +75,44 @@ public class Praktikas {
 			}
 			anzF=0;
 		}
-		studierende.removeAll(ohneF);
+		einF.removeAll(ohneF);
+		einF.removeAll(zweiF);
+		einF.removeAll(dreiF);
 		
 		
 		
 	}
+	public Praktikas clone(){
+		Praktikas out = new Praktikas();
+		out.a=this.a.clone();
+		out.b=this.b.clone();
+		out.c=this.c.clone();
+		out.einF=new LinkedList<Student>();
+		for(Student stud :this.einF){
+			Student help=stud.clone();
+			if(stud.faecher[0]!=null) help.faecher[0]=a;
+			if(stud.faecher[1]!=null) help.faecher[1]=b;
+			if(stud.faecher[2]!=null) help.faecher[2]=c;
+			out.einF.add(help);
+		}
+		out.zweiF=new LinkedList<Student>();
+		for(Student stud :this.zweiF){
+			Student help=stud.clone();
+			if(stud.faecher[0]!=null) help.faecher[0]=a;
+			if(stud.faecher[1]!=null) help.faecher[1]=b;
+			if(stud.faecher[2]!=null) help.faecher[2]=c;
+			out.zweiF.add(help);
+		}
+		out.dreiF=new LinkedList<Student>();
+		for(Student stud :this.dreiF){
+			Student help=stud.clone();
+			if(stud.faecher[0]!=null) help.faecher[0]=a;
+			if(stud.faecher[1]!=null) help.faecher[1]=b;
+			if(stud.faecher[2]!=null) help.faecher[2]=c;
+			out.dreiF.add(help);
+		}
+		return out;
+		
+	}
+
 }

@@ -5,9 +5,11 @@ import java.util.List;
 
 
 public class Praktikum {
-	Praktikum fach;
+	int id;
+	Fach fach;
 	List<Student> studenten;
-	Praktikum(Praktikum fach){
+	Praktikum(Fach fach,int id){
+		this.id=id;
 		this.fach=fach;
 		studenten=new LinkedList<Student>();
 	}
