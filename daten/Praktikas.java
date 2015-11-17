@@ -1,4 +1,4 @@
-package pratikaverteilung;
+package daten;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package pratikaverteilung;
+package daten;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +8,7 @@ public class Praktikum {
 	int id;
 	double happy;
 	Fach fach;
-	List<Student> studenten;
+	private List<Student> studenten;
 	Praktikum(Fach fach,int id){
 		this.id=id;
 		this.fach=fach;
@@ -20,7 +20,7 @@ public class Praktikum {
 		if(studenten.size()==0)studenten.add(studt);
 		else{
 			for(Student all:studenten){
-				happy+= (studt.beziehungen.get(all)-0.5);
+				happy+= (studt.beziehungen.get(all));
 			}
 			studenten.add(studt);
 		}
@@ -30,7 +30,7 @@ public class Praktikum {
 		if(studenten.size()<=1)happy=0.0;
 		else{
 			for(Student all:studenten){
-				happy-= (studt.beziehungen.get(all)-0.5);
+				happy-= (studt.beziehungen.get(all));
 			}
 		}
 	}

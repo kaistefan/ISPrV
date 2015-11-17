@@ -1,4 +1,4 @@
-package pratikaverteilung;
+package daten;
 
 
 public class test {

@@ -1,4 +1,4 @@
-package pratikaverteilung;
+package daten;
 
 import java.util.HashMap;
 import java.util.Map;
