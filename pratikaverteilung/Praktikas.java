@@ -12,9 +12,10 @@ public class Praktikas {
 	List<Student> einF;
 	List<Student> dreiF;
 	List<Student> zweiF;
-	Fach a;
-	Fach b;
-	Fach c;
+	Fach a= new Fach(anzPr);
+	Fach b= new Fach(anzPr);
+	Fach c= new Fach(anzPr);
+	
 	
 	Praktikas(){
 		
@@ -29,9 +30,7 @@ public class Praktikas {
 		zweiF=new LinkedList<Student>();
 		dreiF=new LinkedList<Student>();
 		List<Student> ohneF =new LinkedList<Student>();
-		a=new Fach(anzPr);
-		b=new Fach(anzPr);
-		c=new Fach(anzPr);
+		
 		/*
 		 * Erzeugung aller Studierende
 		 */
@@ -84,9 +83,6 @@ public class Praktikas {
 	}
 	public Praktikas clone(){
 		Praktikas out = new Praktikas();
-		out.a=this.a.clone();
-		out.b=this.b.clone();
-		out.c=this.c.clone();
 		out.einF=new LinkedList<Student>();
 		for(Student stud :this.einF){
 			Student help=stud.clone();

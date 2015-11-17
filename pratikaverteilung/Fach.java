@@ -11,11 +11,7 @@ public class Fach {
 		}
 		
 	}
-	protected Fach clone(){
-		
-		return new Fach(praktikas.length);
-		
-	}
+	
 	
 	
 }
