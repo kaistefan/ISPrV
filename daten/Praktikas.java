@@ -20,6 +20,37 @@ public class Praktikas {
 	Praktikas(){
 		
 	}
+	
+	public List<Student> getEinF() {
+		return einF;
+	}
+
+
+	public List<Student> getDreiF() {
+		return dreiF;
+	}
+
+
+	public List<Student> getZweiF() {
+		return zweiF;
+	}
+
+
+	public Fach getA() {
+		return a;
+	}
+
+
+	public Fach getB() {
+		return b;
+	}
+
+
+	public Fach getC() {
+		return c;
+	}
+
+
 
 	public void generat (){
 		Random random = new Random();
