@@ -13,7 +13,14 @@ public class Student {
 		studId = id;
 		beziehungen = new HashMap<Integer, Double>();
 	}
-
+	public boolean isfree(int i){
+		boolean free=true;
+		for(Praktikum pr :praktikas){
+			if(pr.id==i)return false;
+		}
+		
+		return free;
+	}
 	
 	public Praktikum[] getPraktikas() {
 		return praktikas;

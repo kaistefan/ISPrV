@@ -15,12 +15,6 @@ public class Praktikas {
 	Fach a;
 	Fach b;
 	Fach c;
-	
-	
-	Praktikas(){
-		
-	}
-	
 	public List<Student> getEinF() {
 		return einF;
 	}
@@ -50,7 +44,11 @@ public class Praktikas {
 		return c;
 	}
 
-
+	public double getHappyAll(){
+		
+		return a.getHappy()+b.getHappy()+c.getHappy();
+		
+	}
 
 	public void generat (){
 		Random random = new Random();

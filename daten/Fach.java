@@ -17,4 +17,12 @@ public class Fach {
 	public Praktikum[] getPraktikas() {
 		return praktikas;
 	}
+	public double getHappy(){
+		double out=0;
+		for(Praktikum pr:praktikas){
+			out+=pr.happy;
+		}
+		return out;
+		
+	}
 }

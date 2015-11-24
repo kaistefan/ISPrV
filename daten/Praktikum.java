@@ -8,7 +8,7 @@ public class Praktikum {
 	int id;
 	double happy;
 	Fach fach;
-	private List<Student> studenten;
+	List<Student> studenten;
 
 	Praktikum(Fach fach, int id) {
 		this.id = id;
@@ -16,7 +16,8 @@ public class Praktikum {
 		happy = 0.0;
 		studenten = new LinkedList<Student>();
 	}
-
+	public double getHappy(){return happy;}
+	public List<Student> getStudenten() {return studenten;}
 	public int getId() {
 		return id;
 	}
