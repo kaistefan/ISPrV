@@ -13,6 +13,7 @@ public class Student {
 		studId = id;
 		beziehungen = new HashMap<Integer, Double>();
 	}
+<<<<<<< HEAD
 	public boolean isfree(int i){
 		boolean free=true;
 		for(Praktikum pr :praktikas){
@@ -21,6 +22,9 @@ public class Student {
 		
 		return free;
 	}
+=======
+	
+>>>>>>> ac81ecd9e550e9323d83f56d0a8cdc97899345bb
 	
 	public Praktikum[] getPraktikas() {
 		return praktikas;
@@ -37,6 +41,10 @@ public class Student {
 		out.beziehungen = this.beziehungen;
 		out.praktikas = this.praktikas.clone();
 		return out;
+	}
+	
+	public Fach[] getFaecher(){
+		return faecher;
 	}
 
 }
