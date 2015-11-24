@@ -7,7 +7,7 @@ import daten.*;
 
 public class optimierung {
 
-	class Worker implements Runnable{
+	class Worker extends Thread{
 		Fach fach;
 		Praktikum prScr;
 		Praktikum prDes;
@@ -69,8 +69,23 @@ public class optimierung {
 			for(Worker work:list){
 				work.run();
 			}
+			double max=0;
+			Worker maxWorker = null;
 			for(Worker work:list){
-				work.
+				try {
+					work.join();
+					if(work.max>max) maxWorker=work;
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(max>0){
+				maxWorker.prDes.addStudt(maxWorker.studtScr);
+				maxWorker.prDes.removeStudt(maxWorker.studtDes);
+				maxWorker.prScr.addStudt(maxWorker.studtDes);
+				maxWorker.prScr.removeStudt(maxWorker.studtScr);
+				newhappy=data.getHappyAll();
 			}
 		}while(oldhappy<newhappy);
 	}
