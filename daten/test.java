@@ -11,6 +11,9 @@ public class test {
 		Praktikas pr2 =pr.clone();
 		Student stud=pr2.einF.get(0);
 		stud.studId=99;
+		System.out.println(pr.zweiF.get(0).faecher[0]);
+		System.out.println(pr.zweiF.get(0).faecher[1]);
+		System.out.println(pr.zweiF.get(0).faecher[2]);
 		System.out.println(pr.einF.get(0).studId);
 		System.out.println(stud.studId);
 		System.out.println(pr.einF.size());

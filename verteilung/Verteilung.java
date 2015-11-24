@@ -1,6 +1,7 @@
 package verteilung;
 
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.Stack;
 
 import daten.Praktikas;
@@ -9,17 +10,30 @@ import daten.Student;
 
 public class Verteilung {
 	private Stack<Step> steps;
+	
+	public void stepBack(){
+		if(!steps.isEmpty()){
+			Step step=steps.pop();
+			for(Praktikum pr:step.studt.getPraktikas()){
+				pr.removeStudt(step.studt);
+			}
+			step.list.add(step.studt);
+		}
+	}
 
 	public boolean teileEin(Praktikas pras) {
 		Student stud;
 		Step st;
 		Praktikum[] slots = new Praktikum[3];
+		steps = new Stack<Step>();
+		int error=0;
+		Random random = new Random();
 
 		/* wenn kein PLatz gefunden wird, dann...???
 		 * try catch versuchen, da array out of bound exception wenn kein platz gefunden wird
 		 */
 		while (!pras.getDreiF().isEmpty()) {
-			stud = pras.getDreiF().get(1);
+			stud = pras.getDreiF().remove(random.nextInt(pras.getDreiF().size()));
 			int i = 0;
 
 			// Fach A
@@ -43,7 +57,7 @@ public class Verteilung {
 			slots[2] = pras.getC().getPraktikas()[i];
 
 			stud.setPraktikas(slots);
-
+			slots[0].addStudt(stud);
 			// Step speichern
 			st = new Step(stud, pras.getDreiF());
 			steps.add(st);

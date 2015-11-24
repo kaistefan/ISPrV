@@ -12,9 +12,9 @@ public class Praktikas {
 	List<Student> einF;
 	List<Student> dreiF;
 	List<Student> zweiF;
-	Fach a= new Fach(anzPr);
-	Fach b= new Fach(anzPr);
-	Fach c= new Fach(anzPr);
+	Fach a;
+	Fach b;
+	Fach c;
 	
 	
 	Praktikas(){
@@ -81,21 +81,30 @@ public class Praktikas {
 		/*
 		 * Verteilung der Fächer
 		 */
+		 a= new Fach();
+		 b= new Fach();
+		 c= new Fach();
+		 int countA=0;
+		 int countB=0;
+		 int countC=0;
 		for(Student stud :einF){
 			zufall = Math.round(100.0 * random.nextDouble()) / 100.0;
 			if(zufall<0.8){
 				anzF++;
-				stud.faecher[0]= a;;
+				stud.faecher[0]= a;
+				countA++;
 			}
 			zufall = Math.round(100.0 * random.nextDouble()) / 100.0;
 			if(zufall<0.9){
 				anzF++;
-				stud.faecher[1]= b;;
+				stud.faecher[1]= b;
+				countB++;
 			}
 			zufall = Math.round(100.0 * random.nextDouble()) / 100.0;
 			if(zufall<0.85){
 				anzF++;
-				stud.faecher[2]= c;;
+				stud.faecher[2]= c;
+				countB++;
 			}
 			switch (anzF){
 			case  2: zweiF.add(stud);break; 
@@ -105,6 +114,9 @@ public class Praktikas {
 			}
 			anzF=0;
 		}
+		a.generatePr(countA);
+		b.generatePr(countB);
+		c.generatePr(countC);
 		einF.removeAll(ohneF);
 		einF.removeAll(zweiF);
 		einF.removeAll(dreiF);
@@ -117,25 +129,25 @@ public class Praktikas {
 		out.einF=new LinkedList<Student>();
 		for(Student stud :this.einF){
 			Student help=stud.clone();
-			if(stud.faecher[0]!=null) help.faecher[0]=a;
-			if(stud.faecher[1]!=null) help.faecher[1]=b;
-			if(stud.faecher[2]!=null) help.faecher[2]=c;
+			if(stud.faecher[0]!=null) help.faecher[0]=out.a;
+			if(stud.faecher[1]!=null) help.faecher[1]=out.b;
+			if(stud.faecher[2]!=null) help.faecher[2]=out.c;
 			out.einF.add(help);
 		}
 		out.zweiF=new LinkedList<Student>();
 		for(Student stud :this.zweiF){
 			Student help=stud.clone();
-			if(stud.faecher[0]!=null) help.faecher[0]=a;
-			if(stud.faecher[1]!=null) help.faecher[1]=b;
-			if(stud.faecher[2]!=null) help.faecher[2]=c;
+			if(stud.faecher[0]!=null) help.faecher[0]=out.a;
+			if(stud.faecher[1]!=null) help.faecher[1]=out.b;
+			if(stud.faecher[2]!=null) help.faecher[2]=out.c;
 			out.zweiF.add(help);
 		}
 		out.dreiF=new LinkedList<Student>();
 		for(Student stud :this.dreiF){
 			Student help=stud.clone();
-			if(stud.faecher[0]!=null) help.faecher[0]=a;
-			if(stud.faecher[1]!=null) help.faecher[1]=b;
-			if(stud.faecher[2]!=null) help.faecher[2]=c;
+			if(stud.faecher[0]!=null) help.faecher[0]=out.a;
+			if(stud.faecher[1]!=null) help.faecher[1]=out.b;
+			if(stud.faecher[2]!=null) help.faecher[2]=out.c;
 			out.dreiF.add(help);
 		}
 		return out;
