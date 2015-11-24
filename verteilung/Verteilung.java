@@ -22,59 +22,77 @@ public class Verteilung {
 		}
 	}
 
-	public boolean teileEin(Praktikas pras) {
+	public void teileEin(Praktikas pras) {
 		Student stud;
 		Step st;
 		Praktikum[] slots = new Praktikum[3];
 		steps = new Stack<Step>();
 		Random random = new Random();
 		List<Student> studenten;
-
-		/*
-		 * wenn kein PLatz gefunden wird, dann...??? try catch versuchen, da
-		 * array out of bound exception wenn kein platz gefunden wird
-		 */
+		int error = 0;
 
 		studenten = pras.getDreiF();
 		while (!studenten.isEmpty()) {
-			while (!studenten.isEmpty()) {
-				stud = studenten.remove(random.nextInt(studenten.size()));
+			stud = studenten.remove(random.nextInt(studenten.size()));
+
+			while (error > 0) {
+				error = 0;
 				int i = 0;
 
 				// Fach A
-				if (!(stud.getFaecher()[0] == null)) {
+				if (stud.getFaecher()[0] != null) {
 					while (pras.getA().getPraktikas()[i].isFull()) {
 						i++;
 					}
-					slots[0] = pras.getA().getPraktikas()[i];
+					if (i >= pras.getA().getPraktikas().length) {
+						error += 1;
+					} else {
+						slots[0] = pras.getA().getPraktikas()[i];
+					}
 				}
 				// Fach B
-				if (!(stud.getFaecher()[1] == null)) {
+				if (stud.getFaecher()[1] != null) {
 					i = 0;
 					while (pras.getB().getPraktikas()[i].isFull() || (slots[0].getId() == i)) {
 						i++;
 					}
-					slots[1] = pras.getB().getPraktikas()[i];
+					if (i >= pras.getB().getPraktikas().length) {
+						error += 1;
+					} else {
+						slots[1] = pras.getB().getPraktikas()[i];
+					}
 				}
 				// Fach C
-				if (!(stud.getFaecher()[2] == null)) {
+				if (stud.getFaecher()[2] != null) {
 					i = 0;
 					while (pras.getC().getPraktikas()[i].isFull() || (slots[0].getId() == i)
 							|| (slots[1].getId() == i)) {
 						i++;
 					}
-					slots[2] = pras.getC().getPraktikas()[i];
+					if (i >= pras.getC().getPraktikas().length) {
+						error += 1;
+					} else {
+						slots[2] = pras.getC().getPraktikas()[i];
+					}
 				}
-
-				stud.setPraktikas(slots);
-				slots[0].addStudt(stud);
-				// Step speichern
-				st = new Step(stud, studenten);
-				steps.add(st);
+				if (error > 0) {
+					stepBack();
+				}
 			}
-			if (pras.getDreiF().isEmpty()) studenten= pras.getZweiF();
-			if (pras.getZweiF().isEmpty()) studenten= pras.getEinF();
+			// Praktikas setzen
+			stud.setPraktikas(slots);
+			slots[0].addStudt(stud);
+			slots[1].addStudt(stud);
+			slots[2].addStudt(stud);
+
+			// Step speichern
+			st = new Step(stud, studenten);
+			steps.add(st);
+
+			if (pras.getDreiF().isEmpty())
+				studenten = pras.getZweiF();
+			if (pras.getZweiF().isEmpty())
+				studenten = pras.getEinF();
 		}
-		return true;
 	}
 }
