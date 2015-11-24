@@ -13,7 +13,7 @@ public class Student {
 		studId = id;
 		beziehungen = new HashMap<Integer, Double>();
 	}
-
+	
 	
 	public Praktikum[] getPraktikas() {
 		return praktikas;
@@ -30,6 +30,10 @@ public class Student {
 		out.beziehungen = this.beziehungen;
 		out.praktikas = this.praktikas.clone();
 		return out;
+	}
+	
+	public Fach[] getFaecher(){
+		return faecher;
 	}
 
 }
