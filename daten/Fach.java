@@ -12,6 +12,7 @@ public class Fach {
 		for (int i = 0; i < praktikas.length; i++) {
 			praktikas[i] = new Praktikum(this, i);
 		}
+		return;
 	}
 
 	public Praktikum[] getPraktikas() {

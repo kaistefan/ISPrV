@@ -16,7 +16,7 @@ public class Verteilung {
 		if (!steps.isEmpty()) {
 			Step step = steps.pop();
 			for (Praktikum pr : step.studt.getPraktikas()) {
-				pr.removeStudt(step.studt);
+				if(pr!=null)pr.removeStudt(step.studt);
 			}
 			step.list.add(step.studt);
 		}
@@ -30,21 +30,21 @@ public class Verteilung {
 		Random random = new Random();
 		List<Student> studenten;
 		int error = 0;
-
+		int errorTotal =0;
 		studenten = pras.getDreiF();
 		while (!studenten.isEmpty()) {
 			stud = studenten.remove(random.nextInt(studenten.size()));
 
-			while (error > 0) {
+			do  {
 				error = 0;
 				int i = 0;
 
 				// Fach A
 				if (stud.getFaecher()[0] != null) {
-					while (pras.getA().getPraktikas()[i].isFull()) {
+					while (i<pras.getA().getPraktikas().length-1&&pras.getA().getPraktikas()[i].isFull()) {
 						i++;
 					}
-					if (i >= pras.getA().getPraktikas().length) {
+					if (pras.getA().getPraktikas()[i].isFull()) {
 						error += 1;
 					} else {
 						slots[0] = pras.getA().getPraktikas()[i];
@@ -53,10 +53,11 @@ public class Verteilung {
 				// Fach B
 				if (stud.getFaecher()[1] != null) {
 					i = 0;
-					while (pras.getB().getPraktikas()[i].isFull() || (slots[0].getId() == i)) {
+					while (i<pras.getB().getPraktikas().length-1&&
+							(pras.getB().getPraktikas()[i].isFull() || (slots[0]!=null &&slots[0].getId() == i))) {
 						i++;
 					}
-					if (i >= pras.getB().getPraktikas().length) {
+					if (pras.getB().getPraktikas()[i].isFull()) {
 						error += 1;
 					} else {
 						slots[1] = pras.getB().getPraktikas()[i];
@@ -65,11 +66,12 @@ public class Verteilung {
 				// Fach C
 				if (stud.getFaecher()[2] != null) {
 					i = 0;
-					while (pras.getC().getPraktikas()[i].isFull() || (slots[0].getId() == i)
-							|| (slots[1].getId() == i)) {
+					while (i<pras.getC().getPraktikas().length-1&&
+							(pras.getC().getPraktikas()[i].isFull() || (slots[0]!=null &&slots[0].getId() == i)
+							|| (slots[1]!=null &&slots[1].getId() == i))) {
 						i++;
 					}
-					if (i >= pras.getC().getPraktikas().length) {
+					if (pras.getC().getPraktikas()[i].isFull()) {
 						error += 1;
 					} else {
 						slots[2] = pras.getC().getPraktikas()[i];
@@ -78,21 +80,33 @@ public class Verteilung {
 				if (error > 0) {
 					stepBack();
 				}
-			}
+				if(error > 0)errorTotal++;
+				if(errorTotal>10000000){
+					break;
+				}
+			}while(error > 0);
 			// Praktikas setzen
+			if(errorTotal>10000000){
+				break;
+			}
 			stud.setPraktikas(slots);
-			slots[0].addStudt(stud);
-			slots[1].addStudt(stud);
-			slots[2].addStudt(stud);
-
+			if(slots[0]!=null)slots[0].addStudt(stud);
+			if(slots[1]!=null)slots[1].addStudt(stud);
+			if(slots[2]!=null)slots[2].addStudt(stud);
+			slots=new Praktikum[3];
 			// Step speichern
 			st = new Step(stud, studenten);
 			steps.add(st);
 
 			if (pras.getDreiF().isEmpty())
+				if (pras.getZweiF().isEmpty())
+					studenten = pras.getEinF();
+				else
 				studenten = pras.getZweiF();
-			if (pras.getZweiF().isEmpty())
-				studenten = pras.getEinF();
+			else{
+				studenten=pras.getDreiF();
+			}
+			
 		}
 	}
 }

@@ -31,7 +31,7 @@ public class Praktikum {
 			studenten.add(studt);
 		else {
 			for (Student all : studenten) {
-				happy += (studt.beziehungen.get(all));
+				happy += (studt.beziehungen.get(all.studId));
 			}
 			studenten.add(studt);
 		}
@@ -43,7 +43,7 @@ public class Praktikum {
 			happy = 0.0;
 		else {
 			for (Student all : studenten) {
-				happy -= (studt.beziehungen.get(all));
+				happy -= (studt.beziehungen.get(all.studId));
 			}
 		}
 	}

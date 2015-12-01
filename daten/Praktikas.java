@@ -102,7 +102,7 @@ public class Praktikas {
 			if(zufall<0.85){
 				anzF++;
 				stud.faecher[2]= c;
-				countB++;
+				countC++;
 			}
 			switch (anzF){
 			case  2: zweiF.add(stud);break; 
