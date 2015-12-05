@@ -15,6 +15,12 @@ public class Praktikas {
 	Fach a;
 	Fach b;
 	Fach c;
+	private int startA;
+	private int startB;
+	private int startC;
+	private int countStudtA;
+	private int countStudtB;
+	private int countStudtC;
 	public List<Student> getEinF() {
 		return einF;
 	}
@@ -50,7 +56,10 @@ public class Praktikas {
 		
 	}
 
-	public void generat (){
+	public void generat (int startA,int startB,int startC){
+		this.startA=startA;
+		this.startB=startB;
+		this.startC=startC;
 		Random random = new Random();
 		random.nextDouble();
 		double zufall;
@@ -112,9 +121,12 @@ public class Praktikas {
 			}
 			anzF=0;
 		}
-		a.generatePr(countA);
-		b.generatePr(countB);
-		c.generatePr(countC);
+		a.generatePr(countA,startA);
+		b.generatePr(countB,startB);
+		c.generatePr(countC,startC);
+		countStudtA=countA;
+		countStudtB=countB;
+		countStudtC=countC;
 		einF.removeAll(ohneF);
 		einF.removeAll(zweiF);
 		einF.removeAll(dreiF);
@@ -125,6 +137,12 @@ public class Praktikas {
 	public Praktikas clone(){
 		Praktikas out = new Praktikas();
 		out.einF=new LinkedList<Student>();
+		out.a=new Fach();
+		out.b=new Fach();
+		out.c=new Fach();
+		out.a.generatePr(countStudtA, startA);
+		out.b.generatePr(countStudtB, startB);
+		out.c.generatePr(countStudtC, startC);
 		for(Student stud :this.einF){
 			Student help=stud.clone();
 			if(stud.faecher[0]!=null) help.faecher[0]=out.a;

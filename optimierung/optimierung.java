@@ -5,45 +5,51 @@ import java.util.List;
 
 import daten.*;
 
-public class optimierung {
+public class Optimierung {
 
 	class Worker extends Thread{
 		Fach fach;
-		Praktikum prScr;
+		Praktikum prScrF;
 		Praktikum prDes;
 		Student studtScr;
 		Student studtDes;
 		double max=0;
-		Worker(Fach fach,Praktikum pr){
+		Worker(Fach fach){
 			this.fach=fach;
-			this.prScr=pr;
 		}
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			double happyScr=prScr.getHappy();
+			
 			double happyDes=0;
-			for(Student studt:prScr.getStudenten()){	
-				for(Praktikum pr :fach.getPraktikas()){
-					if(pr!=prScr&&studt.isfree(pr.getId())){
-						happyDes= pr.getHappy();
-						for(Student studtTemp:pr.getStudenten()){
-							if(studtTemp.isfree(prScr.getId())){
-								pr.removeStudt(studtTemp);
-								pr.addStudt(studt);
-								prScr.addStudt(studtTemp);
-								prScr.removeStudt(studt);
-								double temp = prScr.getHappy()-happyScr+pr.getHappy()-happyDes;
-								if(temp>max){
-									prDes=pr;
-									studtDes=studtTemp;
-									studtScr=studt;
-									max=temp;
-								}
-								pr.removeStudt(studt);
-								pr.addStudt(studtTemp);
-								prScr.addStudt(studt);
-								prScr.removeStudt(studtTemp);
+			for(int i =0;i<fach.getPraktikas().length;i++){
+				Praktikum prScr =fach.getPraktikas()[i];
+				double happyScr=prScr.getHappy();
+				for(int l =0;l<prScr.getStudenten().size();l++){
+					Student studt=prScr.getStudenten().get(l);
+					for(Praktikum pr :fach.getPraktikas()){
+						if(pr!=prScr&&studt.isfree(pr.getId())){
+							happyDes= pr.getHappy();
+							for(int j =0;j<pr.getStudenten().size();j++){
+								Student studtTemp=pr.getStudenten().get(j);
+								if(studtTemp.isfree(prScr.getId())){
+									pr.removeStudt(studtTemp);
+									pr.addStudt(studt);
+									prScr.addStudt(studtTemp);
+									prScr.removeStudt(studt);
+									double temp = prScr.getHappy()-happyScr+pr.getHappy()-happyDes;
+									if(temp>max){
+										prScrF=prScr;
+										prDes=pr;
+										studtDes=studtTemp;
+										studtScr=studt;
+										max=temp;
+									}	
+									pr.removeStudt(studt);
+									pr.addStudt(studtTemp);
+									prScr.addStudt(studt);
+									prScr.removeStudt(studtTemp);
+								}	
 							}
 						}
 					}
@@ -53,19 +59,19 @@ public class optimierung {
 		
 	}
 	public void optimum (Praktikas data){
-		double oldhappy=data.getHappyAll();
-		double newhappy=0;
+		double oldhappy=0;
+		double newhappy=data.getHappyAll();
 		do{
+			oldhappy=newhappy;
 			List<Worker> list=new LinkedList<Worker>();
-			for(Praktikum pr :data.getA().getPraktikas()){
-				list.add(new Worker(data.getA(),pr));
-			}
-			for(Praktikum pr :data.getB().getPraktikas()){
-				list.add(new Worker(data.getB(),pr));
-			}
-			for(Praktikum pr :data.getC().getPraktikas()){
-				list.add(new Worker(data.getC(),pr));
-			}
+				list.add(new Worker(data.getA()));
+			
+			
+				list.add(new Worker(data.getB()));
+			
+			
+				list.add(new Worker(data.getC()));
+			
 			for(Worker work:list){
 				work.run();
 			}
@@ -83,8 +89,8 @@ public class optimierung {
 			if(max>0){
 				maxWorker.prDes.addStudt(maxWorker.studtScr);
 				maxWorker.prDes.removeStudt(maxWorker.studtDes);
-				maxWorker.prScr.addStudt(maxWorker.studtDes);
-				maxWorker.prScr.removeStudt(maxWorker.studtScr);
+				maxWorker.prScrF.addStudt(maxWorker.studtDes);
+				maxWorker.prScrF.removeStudt(maxWorker.studtScr);
 				newhappy=data.getHappyAll();
 			}
 		}while(oldhappy<newhappy);

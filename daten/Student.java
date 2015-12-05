@@ -17,7 +17,8 @@ public class Student {
 	public boolean isfree(int i){
 		boolean free=true;
 		for(Praktikum pr :praktikas){
-			if(pr.id==i)return false;
+			
+			if(pr!=null&&pr.id==i)return false;
 		}
 		
 		return free;
