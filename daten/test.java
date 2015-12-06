@@ -35,9 +35,16 @@ public class test {
 
 		System.out.println("Happyall pr1 "+pr.getHappyAll());
 		System.out.println("Happyall pr2 "+pr2.getHappyAll());
+		
 		Optimierung op=new Optimierung();
+		final long timeStart = System.currentTimeMillis(); 
 		op.optimum(pr);
+		 final long timeEnd = System.currentTimeMillis();
+	     System.out.println("Verlaufszeit der ersten Optimierung: " + (timeEnd - timeStart) + " Millisek."); 
+	     final long timeStart2 = System.currentTimeMillis();
 		op.optimum(pr2);
+		 final long timeEnd2 = System.currentTimeMillis();
+	     System.out.println("Verlaufszeit der zweiten Optimierung: " + (timeEnd2 - timeStart2) + " Millisek."); 
 		System.out.println("Happyall pr1 op "+pr.getHappyAll());
 		System.out.println("Happyall pr2 op "+pr2.getHappyAll());
 	}
