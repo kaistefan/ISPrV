@@ -33,11 +33,7 @@ public class Optimierung {
 							for(int j =0;j<pr.getStudenten().size();j++){
 								Student studtTemp=pr.getStudenten().get(j);
 								if(studtTemp.isfree(prScr.getId())){
-									pr.removeStudt(studtTemp);
-									pr.addStudt(studt);
-									prScr.addStudt(studtTemp);
-									prScr.removeStudt(studt);
-									double temp = prScr.getHappy()-happyScr+pr.getHappy()-happyDes;
+									double temp = (prScr.testSwitch(studt, studtTemp)-happyScr)+(pr.testSwitch(studtTemp,studt)-happyDes);
 									if(temp>max){
 										prScrF=prScr;
 										prDes=pr;
@@ -45,10 +41,6 @@ public class Optimierung {
 										studtScr=studt;
 										max=temp;
 									}	
-									pr.removeStudt(studt);
-									pr.addStudt(studtTemp);
-									prScr.addStudt(studt);
-									prScr.removeStudt(studtTemp);
 								}	
 							}
 						}
@@ -80,17 +72,20 @@ public class Optimierung {
 			for(Worker work:list){
 				try {
 					work.join();
-					if(work.max>max) maxWorker=work;
+					if(work.max>max){
+						maxWorker=work;
+						max=maxWorker.max;
+					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 			if(max>0){
-				maxWorker.prDes.addStudt(maxWorker.studtScr);
 				maxWorker.prDes.removeStudt(maxWorker.studtDes);
-				maxWorker.prScrF.addStudt(maxWorker.studtDes);
 				maxWorker.prScrF.removeStudt(maxWorker.studtScr);
+				maxWorker.prDes.addStudt(maxWorker.studtScr);		
+				maxWorker.prScrF.addStudt(maxWorker.studtDes);			
 				newhappy=data.getHappyAll();
 			}
 		}while(oldhappy<newhappy);

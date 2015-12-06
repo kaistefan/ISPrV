@@ -47,5 +47,16 @@ public class Praktikum {
 			}
 		}
 	}
+	public double testSwitch (Student in,Student out){
+		double happyOut=happy;
+		for(int i =0;i<studenten.size();i++){
+			Student studt=studenten.get(i);
+			if(in.studId!=studt.studId){
+				happyOut-=(in.beziehungen.get(studt.studId));
+				happyOut+=(out.beziehungen.get(studt.studId));
+			}
+		}
+		return happyOut;
+	}
 
 }
