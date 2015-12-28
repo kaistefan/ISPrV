@@ -18,7 +18,7 @@ public class Praktikas {
 	private int startA;
 	private int startB;
 	private int startC;
-	private int countStudtA;
+	public int countStudtA;
 	private int countStudtB;
 	private int countStudtC;
 	public List<Student> getEinF() {

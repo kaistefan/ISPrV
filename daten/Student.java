@@ -43,5 +43,21 @@ public class Student {
 	public Fach[] getFaecher(){
 		return faecher;
 	}
+	
+	public String toString(){
+		String ret = "";
+		if(praktikas.length > 0){
+			for(int i = 0; i < praktikas.length; i++){
+				String termin;
+				if(praktikas[i] != null){
+				termin = praktikas[i].id + "";
+				}else{
+					termin = "none";
+				}
+				ret += "pr" + i + " Slot: " + termin + "\t";
+			}
+		}
+		return ret;
+	}
 
 }

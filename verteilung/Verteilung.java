@@ -10,6 +10,7 @@ import daten.Praktikum;
 import daten.Student;
 
 public class Verteilung {
+	
 	private Stack<Step> steps;
 
 	public void stepBack() {
@@ -23,7 +24,7 @@ public class Verteilung {
 		}
 	}
 
-	public void teileEin(Praktikas pras) {
+	public void teileEin(Praktikas pras) throws SolutionException {
 		Student stud;
 		Step st;
 		Praktikum[] slots = new Praktikum[3];
@@ -84,13 +85,11 @@ public class Verteilung {
 				}
 				if(error > 0)errorTotal++;
 				if(errorTotal>1000000){
-					break;
+					 throw new SolutionException();
 				}
 			}while(error > 0);
 			// Praktikas setzen
-			if(errorTotal>1000000){
-				break;
-			}
+			
 			stud.setPraktikas(slots);
 			if(slots[0]!=null)slots[0].addStudt(stud);
 			if(slots[1]!=null)slots[1].addStudt(stud);

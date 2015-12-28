@@ -8,7 +8,7 @@ public class Fach {
 		
 	}
 	public void generatePr (int a,int b){
-		praktikas = new Praktikum[(int) Math.round(a/12.0+0.5)];
+		praktikas = new Praktikum[(int) Math.round(a/12.0+0.49)];
 		for (int i = 0; i < praktikas.length; i++) {
 			praktikas[i] = new Praktikum(this, i+b);
 		}

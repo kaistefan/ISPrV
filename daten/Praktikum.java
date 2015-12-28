@@ -58,5 +58,9 @@ public class Praktikum {
 		}
 		return happyOut;
 	}
+	public String toString(){
+		return id+" Studs: " + this.studenten.size();
+		
+	}
 
 }
