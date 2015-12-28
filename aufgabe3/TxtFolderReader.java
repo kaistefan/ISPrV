@@ -16,16 +16,16 @@ public class TxtFolderReader {
 	}
 	List <String>  readFolder(File file){
 		List<String> out = new LinkedList<String> ();
-		if(file.isDirectory()){		
+		
 			for(File a : file.listFiles()){
 				if(a.isFile()){
 					String typ = a.getName();
 					typ = typ.substring(typ.indexOf('.'));
-					if(typ.equalsIgnoreCase("txt")){
+					if(typ.equalsIgnoreCase(".txt")){
 						out.add(readFile(a));
 					}
 				}
-			}
+			
 		}
 		return out;	
 	}
@@ -39,6 +39,8 @@ public class TxtFolderReader {
 	            while ((line = f.readLine()) != null) {
 	            	out+=line;        
 	            }
+	            f.close();
+	            f0.close();
 	        }
 	        catch (FileNotFoundException e) {
 	            e.printStackTrace();
@@ -46,6 +48,7 @@ public class TxtFolderReader {
 	        catch (IOException e) {
 	            e.printStackTrace();
 	        }
+		 
 		return out;
 	}
 }
