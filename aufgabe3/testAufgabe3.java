@@ -34,13 +34,13 @@ public class testAufgabe3 {
 	for(String text:test3){
 		if(0==textcl.test(text)){ok++;evalFilm++;}
 	}
-	System.out.println("Richtig "+ok/test3.size()+"%");
+	System.out.println("Film Richtig "+ok/test3.size()+"%");
 	List<String> test4 =in.readFolder(args[5]);
 	ok=0;
 	for(String text:test4){
 		if(1==textcl.test(text)){ok++;evalZeit++;}
 	}
-	System.out.println("Richtig "+ok/test4.size()+"%");
-	System.out.println("Gesamt "+(evalFilm+evalZeit)/(test3.size()+test4.size())+"%");
+	System.out.println("Zeit Richtig "+ok/test4.size()+"%");
+	System.out.println("eval Gesamt "+(evalFilm+evalZeit)/(test3.size()+test4.size())+"%");
 	}
 }
