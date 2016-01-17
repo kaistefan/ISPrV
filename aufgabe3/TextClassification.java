@@ -3,6 +3,7 @@ package aufgabe3;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +53,7 @@ public class TextClassification {
 						else{
 							temp=temp.toLowerCase();
 							if(wordsA.get(temp)==null){
-								List<Double> listTemp = new ArrayList<Double>();	
+								List<Double> listTemp = new LinkedList<Double>();	
 								for(int i=0;i<list.size();i++) listTemp.add(0.0);
 								wordsA.put(temp, listTemp);
 							}
@@ -66,7 +67,7 @@ public class TextClassification {
 			String satzZeichen=text.replaceAll("[A-Za-z0-9\u00C0-\u00FF  ]", "");
 			for(char c:satzZeichen.toCharArray()){
 				if(charsA.get(c)==null){
-					List<Double> listTemp = new ArrayList<Double>();	
+					List<Double> listTemp = new LinkedList<Double>();	
 					for(int i=0;i<list.size();i++) listTemp.add(0.0);
 					charsA.put(c, listTemp);
 				}
@@ -110,7 +111,7 @@ public class TextClassification {
 						else{
 							temp=temp.toLowerCase();
 							if(wordsB.get(temp)==null){
-								List<Double> listTemp = new ArrayList<Double>();	
+								List<Double> listTemp = new LinkedList<Double>();	
 								for(int i=0;i<list.size();i++) listTemp.add(0.0);
 								wordsB.put(temp, listTemp);
 							}
@@ -124,7 +125,7 @@ public class TextClassification {
 			String satzZeichen=text.replaceAll("[A-Za-z0-9\u00C0-\u00FF  ]", "");
 			for(char c:satzZeichen.toCharArray()){
 				if(charsB.get(c)==null){
-					List<Double> listTemp = new ArrayList<Double>();	
+					List<Double> listTemp = new LinkedList<Double>();	
 					for(int i=0;i<list.size();i++) listTemp.add(0.0);
 					charsB.put(c, listTemp);
 				}
@@ -136,14 +137,14 @@ public class TextClassification {
 	}
 
 	/**
-	 *  Erstellt die Kriterien.
+	 *  Erstellt die Kriterien. Zu vor muss aber trainA() und trainB() aufgerufen werden.
 	 * @param arg 
 	 * 	Text der zur ueberpruefenden Merkmale: 
 	 *  fuer durchschnitts Satzlänge \\s.length, 
 	 *  fuer ein Wort \\word <?>,
 	 *  fuer ein Zeichen \\char <?>.
 	 * 	Mehere Merkmale werden mit , getrent.
-	 *  Beispiel:\\s.length  ,\\char ?,\\char ,,\\char :
+	 *  Beispiel:"\\s.length  ,\\char ?,\\char ,,\\char :"
 	 */
 	void creatCriteria(String arg){
 		krits=new ArrayList<Criterion>();

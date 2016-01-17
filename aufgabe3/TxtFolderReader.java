@@ -10,13 +10,12 @@ import java.util.List;
 
 public class TxtFolderReader {
 	
-	List <String>  readFolder(String file){
-		
+	List <String>  readFolder(String file){	
 		return readFolder(new File(file));	
 	}
+	
 	List <String>  readFolder(File file){
 		List<String> out = new LinkedList<String> ();
-		
 			for(File a : file.listFiles()){
 				if(a.isFile()){
 					String typ = a.getName();
@@ -24,11 +23,11 @@ public class TxtFolderReader {
 					if(typ.equalsIgnoreCase(".txt")){
 						out.add(readFile(a));
 					}
-				}
-			
+				}	
 		}
 		return out;	
 	}
+	
 	String readFile(File a) {
 		// TODO Auto-generated method stub
 		String out = "";
@@ -47,8 +46,7 @@ public class TxtFolderReader {
 	        }
 	        catch (IOException e) {
 	            e.printStackTrace();
-	        }
-		 
+	        }		 
 		return out;
 	}
 }
