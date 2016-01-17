@@ -10,9 +10,9 @@ public class Criterion {
 	/**
 	 * 
 	 * @param typ Der Typ des Kriterium 
-	 * @param item 
-	 * @param a
-	 * @param b
+	 * @param item Kriterium
+	 * @param a Werte der Kategorie A
+	 * @param b Werte der Kategorie B
 	 */
 	public Criterion(String typ,String item,Double [] a,Double [] b) {
 		// TODO Auto-generated constructor stub
@@ -26,8 +26,8 @@ public class Criterion {
 	}
 	
 	/**
-	 * 
-	 * @param s
+	 * Sortiert das das Array vom kleinsten zum groeßten Wert.
+	 * @param s zu sortierende Array
 	 */
 	private void sort(Double [] s){
 		 for (int n=s.length; n>1; n=n-1){
@@ -42,9 +42,9 @@ public class Criterion {
 	}
 	
 	/**
-	 * 
-	 * @param num
-	 * @return
+	 * gibt die Wahrscheinlichkeiten der Zugehoerigkeit zu den beiden Kategorien  
+	 * @param num  das vorkommen des Kriterium 
+	 * @return die Wahrscheinlichkeiten
 	 */
 	Double[]test(Double num){
 		if(num == null)num=0.0;
@@ -57,16 +57,11 @@ public class Criterion {
 			 if(num<=size*2){
 			 out[0]=(double) (numberIn(size,size*2,a)/a.length);
 			 }
-			 else{
-				
-					 
-						 out[0]=(double) (numberIn(size*3,Double.MAX_VALUE,a)/a.length);
-					 
+			 else{		 
+					 out[0]=(double) (numberIn(size*3,Double.MAX_VALUE,a)/a.length); 
 				 }
 			 }
-		 
 		  size =(b[b.length-1]-a[0])/3;
-		  
 		  if(num<=size){
 				 out[1]=(double) (numberIn( 0.0,size,b)/b.length);
 			 }
@@ -74,22 +69,19 @@ public class Criterion {
 				 if(num<=size*2){
 				 out[1]=(double) (numberIn(size,size*2,b)/b.length);
 				 }
-				 else{
-						
-							 out[1]=(double) (numberIn(size*3,Double.MAX_VALUE,b)/b.length);
-						 
+				 else{					
+					 out[1]=(double) (numberIn(size*3,Double.MAX_VALUE,b)/b.length);		 
 					 }
 				 }
-
 		 return out;
 	}
 	
 	/**
-	 * 
-	 * @param min
-	 * @param max
-	 * @param a
-	 * @return
+	 * Zaehlt das vorkommen der Werte zwischen min und max.
+	 * @param min startwert
+	 * @param max endwert
+	 * @param a das Array
+	 * @return Haeufigkeit 
 	 */
 	 private double numberIn(Double min,Double max,Double[]a){
 		 double out=0.0;
@@ -97,10 +89,8 @@ public class Criterion {
 			 if(a[i]>=min&&a[i]<=max){
 				 out++;
 			 }
-			
 		 }	 
-		 return out;
-		 
+		 return out; 
 	 }
 
 

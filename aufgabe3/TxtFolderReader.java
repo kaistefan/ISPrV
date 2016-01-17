@@ -10,10 +10,20 @@ import java.util.List;
 
 public class TxtFolderReader {
 	
+	/**
+	 * Gibt alle Texte aus dem Ordner in einer Liste wieder.
+	 * @param file File zum Ordner als Text.
+	 * @return Liste mit den Texten
+	 */
 	List <String>  readFolder(String file){	
 		return readFolder(new File(file));	
 	}
 	
+	/**
+	 * Gibt alle Texte aus dem Ordner in einer Liste wieder.
+	 * @param file File zum Ordner.
+	 * @return Liste mit den Texten
+	 */
 	List <String>  readFolder(File file){
 		List<String> out = new LinkedList<String> ();
 			for(File a : file.listFiles()){
@@ -28,6 +38,11 @@ public class TxtFolderReader {
 		return out;	
 	}
 	
+	/**
+	 * liefert den Text vom File.
+	 * @param a File zum Text
+	 * @return Der Text.
+	 */
 	String readFile(File a) {
 		// TODO Auto-generated method stub
 		String out = "";
