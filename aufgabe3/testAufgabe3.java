@@ -14,10 +14,10 @@ public class testAufgabe3 {
 	List<String> test =in.readFolder(args[2]);
 	textcl.creatCrit();
 	double ok=0;
-	/*for(String text:test){
+	for(String text:test){
 		if(0==textcl.test(text))ok++;
 	}
-	System.out.println(ok/test.size());*/
+	System.out.println(ok/test.size());
 	List<String> test2 =in.readFolder(args[3]);
 	ok=0;
 	for(String text:test2){
@@ -30,5 +30,11 @@ public class testAufgabe3 {
 		if(0==textcl.test(text))ok++;
 	}
 	System.out.println(ok/test3.size());
+	List<String> test4 =in.readFolder(args[5]);
+	ok=0;
+	for(String text:test4){
+		if(0==textcl.test(text))ok++;
+	}
+	System.out.println(ok/test4.size());
 	}
 }

@@ -133,10 +133,12 @@ public class TextClassification {
 	
 	void creatCrit(){
 		krits=new ArrayList<Kriterium>();
-		krits.add(new Kriterium("\\s.length","",sentenceLengtsA,sentenceLengtsB));
+		//krits.add(new Kriterium("\\s.length","",sentenceLengtsA,sentenceLengtsB));
 		krits.add(new Kriterium("\\char","?",listToDoubleArray(charsA.get('?')),listToDoubleArray(charsB.get('?'))));	
 		krits.add(new Kriterium("\\char","!",listToDoubleArray(charsA.get('!')),listToDoubleArray(charsB.get('!'))));	
+		krits.add(new Kriterium("\\char","–",listToDoubleArray(charsA.get('–')),listToDoubleArray(charsB.get('–'))));	
 		krits.add(new Kriterium("\\char",":",listToDoubleArray(charsA.get(':')),listToDoubleArray(charsB.get(':'))));	
+		krits.add(new Kriterium("\\char",".",listToDoubleArray(charsA.get('.')),listToDoubleArray(charsB.get('.'))));	
 	}
 	
 	
@@ -186,7 +188,7 @@ public class TextClassification {
 			if(charsM.get(c)==null)charsM.put(c,0.0);		
 			charsM.put(c, charsM.get(c)+1);
 		}
-		
+		//System.out.println(charsM.get('?'));
 		double a=-1.0;
 		double b=-1.0;
 		
@@ -195,13 +197,12 @@ public class TextClassification {
 			switch ( krit.typ ) {
 			case "\\s.length"  : temp=krit.test((double) sentenceLengts);if(a==-1.0)a=temp[0];else a*=temp[0];if(b==-1.0)b=temp[1];else b*=temp[1];continue;
 			case "\\word" :temp=krit.test(wordsM.get(krit.item));if(a==-1.0)a=temp[0];else a*=temp[0];if(b==-1.0)b=temp[1];else b*=temp[1];continue;
-			case "\\char" :temp=krit.test(charsM.get(krit.item));if(a==-1.0)a=temp[0];else a*=temp[0];if(b==-1.0)b=temp[1];else b*=temp[1];continue;
+			case "\\char" :temp=krit.test(charsM.get(krit.item.charAt(0)));if(a==-1.0)a=temp[0];else a*=temp[0];if(b==-1.0)b=temp[1];else b*=temp[1];continue;
 			}
 		}
 		double isA=a/(a+b);
 		double isB=b/(a+b);
-		System.out.println(a);
-		System.out.println(b);
+		
 		if(isA>=isB){
 			return 0;
 		}

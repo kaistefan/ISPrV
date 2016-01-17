@@ -1,5 +1,6 @@
 package aufgabe3;
 
+
 public class Kriterium {
 	String typ;
 	String item;
@@ -75,5 +76,6 @@ public class Kriterium {
 		 return out;
 		 
 	 }
+
 
 }
