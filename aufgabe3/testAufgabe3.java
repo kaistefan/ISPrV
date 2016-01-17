@@ -13,28 +13,34 @@ public class testAufgabe3 {
 	textcl.trainB(train2);
 	List<String> test =in.readFolder(args[2]);
 	textcl.creatCrit();
+	double testFilm=0;
+	double testZeit=0;
+	double evalFilm=0;
+	double evalZeit=0;
 	double ok=0;
 	for(String text:test){
-		if(0==textcl.test(text))ok++;
+		if(0==textcl.test(text)){ok++;testFilm++;}
 	}
-	System.out.println(ok/test.size());
+	System.out.println("Film Test Richtig "+ok/test.size()+"%");
 	List<String> test2 =in.readFolder(args[3]);
 	ok=0;
 	for(String text:test2){
-		if(1==textcl.test(text))ok++;
+		if(1==textcl.test(text)){ok++;testZeit++;}
 	}
-	System.out.println(ok/test2.size());
+	System.out.println("Zeit Test Richtig "+ok/test2.size()+"%");
+	System.out.println("Gesamt "+(testFilm+testZeit)/(test2.size()+test.size())+"%");
 	List<String> test3 =in.readFolder(args[4]);
 	ok=0;
 	for(String text:test3){
-		if(0==textcl.test(text))ok++;
+		if(0==textcl.test(text)){ok++;evalFilm++;}
 	}
-	System.out.println(ok/test3.size());
+	System.out.println("Richtig "+ok/test3.size()+"%");
 	List<String> test4 =in.readFolder(args[5]);
 	ok=0;
 	for(String text:test4){
-		if(0==textcl.test(text))ok++;
+		if(1==textcl.test(text)){ok++;evalZeit++;}
 	}
-	System.out.println(ok/test4.size());
+	System.out.println("Richtig "+ok/test4.size()+"%");
+	System.out.println("Gesamt "+(evalFilm+evalZeit)/(test3.size()+test4.size())+"%");
 	}
 }

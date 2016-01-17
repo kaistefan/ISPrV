@@ -13,10 +13,10 @@ public class TextClassification {
 	private Double [] sentenceLengtsA,sentenceLengtsB;
 	private int []totalWordsA,totalWordsB;
 	private int []totalCharsA,totalCharsB;
-	private HashMap<String, List<Integer>> wordsA;
-	private HashMap<String,List<Integer>> wordsB;
-	private HashMap<Character, List<Integer>> charsA;
-	private HashMap<Character,List<Integer>> charsB;
+	private HashMap<String, List<Double>> wordsA;
+	private HashMap<String,List<Double>> wordsB;
+	private HashMap<Character, List<Double>> charsA;
+	private HashMap<Character,List<Double>> charsB;
 	private int numberCountA,numberCountB;
 	private List<Kriterium> krits;
 	
@@ -25,8 +25,8 @@ public class TextClassification {
 		totalSentencesA=new int[list.size()];
 		totalWordsA=new int[list.size()];
 		sentenceLengtsA=new Double[list.size()];
-		charsA=new HashMap<Character,List<Integer>>();
-		wordsA=new HashMap<String,List<Integer>>();
+		charsA=new HashMap<Character,List<Double>>();
+		wordsA=new HashMap<String,List<Double>>();
 		for(int i=0;i<list.size();i++){
 			sentenceLengtsA[i]=0.0;
 			totalSentencesA[i]=0;
@@ -49,11 +49,11 @@ public class TextClassification {
 						else{
 							temp=temp.toLowerCase();
 							if(wordsA.get(temp)==null){
-								List<Integer> listTemp = new ArrayList<Integer>();	
-								for(int i=0;i<list.size();i++) listTemp.add(0);
+								List<Double> listTemp = new ArrayList<Double>();	
+								for(int i=0;i<list.size();i++) listTemp.add(0.0);
 								wordsA.put(temp, listTemp);
 							}
-							wordsA.get(temp).add(totalTextA, wordsA.get(temp).get(totalTextA)+1);
+							wordsA.get(temp).add(totalTextA, wordsA.get(temp).get(totalTextA)+1.0/words.length);
 							wordsA.get(temp).remove(totalTextA+1);
 						}		
 					}
@@ -63,11 +63,11 @@ public class TextClassification {
 			String satzZeichen=text.replaceAll("[A-Za-z0-9\u00C0-\u00FF  ]", "");
 			for(char c:satzZeichen.toCharArray()){
 				if(charsA.get(c)==null){
-					List<Integer> listTemp = new ArrayList<Integer>();	
-					for(int i=0;i<list.size();i++) listTemp.add(0);
+					List<Double> listTemp = new ArrayList<Double>();	
+					for(int i=0;i<list.size();i++) listTemp.add(0.0);
 					charsA.put(c, listTemp);
 				}
-				charsA.get(c).add(totalTextA, charsA.get(c).get(totalTextA)+1);
+				charsA.get(c).add(totalTextA, charsA.get(c).get(totalTextA)+1.0/satzZeichen.length());
 				charsA.get(c).remove(totalTextA+1);
 			}
 			totalTextA++;
@@ -80,8 +80,8 @@ public class TextClassification {
 		totalSentencesB=new int[list.size()];
 		totalWordsB=new int[list.size()];
 		sentenceLengtsB=new Double[list.size()];
-		charsB=new HashMap<Character,List<Integer>>();
-		wordsB=new HashMap<String,List<Integer>>();
+		charsB=new HashMap<Character,List<Double>>();
+		wordsB=new HashMap<String,List<Double>>();
 		for(int i=0;i<list.size();i++){
 			sentenceLengtsB[i]=0.0;
 			totalSentencesB[i]=0;
@@ -104,8 +104,8 @@ public class TextClassification {
 						else{
 							temp=temp.toLowerCase();
 							if(wordsB.get(temp)==null){
-								List<Integer> listTemp = new ArrayList<Integer>();	
-								for(int i=0;i<list.size();i++) listTemp.add(0);
+								List<Double> listTemp = new ArrayList<Double>();	
+								for(int i=0;i<list.size();i++) listTemp.add(0.0);
 								wordsB.put(temp, listTemp);
 							}
 							wordsB.get(temp).add(totalTextB, wordsB.get(temp).get(totalTextB)+1);
@@ -118,13 +118,14 @@ public class TextClassification {
 			String satzZeichen=text.replaceAll("[A-Za-z0-9\u00C0-\u00FF  ]", "");
 			for(char c:satzZeichen.toCharArray()){
 				if(charsB.get(c)==null){
-					List<Integer> listTemp = new ArrayList<Integer>();	
-					for(int i=0;i<list.size();i++) listTemp.add(0);
+					List<Double> listTemp = new ArrayList<Double>();	
+					for(int i=0;i<list.size();i++) listTemp.add(0.0);
 					charsB.put(c, listTemp);
 				}
-				charsB.get(c).add(totalTextB, charsB.get(c).get(totalTextB)+1);
+				charsB.get(c).add(totalTextB, charsB.get(c).get(totalTextB)+1.0/satzZeichen.length());
 				charsB.get(c).remove(totalTextB+1);
 			}
+			
 			totalTextB++;
 		}
 		System.out.println(charsA);
@@ -133,19 +134,19 @@ public class TextClassification {
 	
 	void creatCrit(){
 		krits=new ArrayList<Kriterium>();
-		//krits.add(new Kriterium("\\s.length","",sentenceLengtsA,sentenceLengtsB));
+		krits.add(new Kriterium("\\s.length","",sentenceLengtsA,sentenceLengtsB));
 		krits.add(new Kriterium("\\char","?",listToDoubleArray(charsA.get('?')),listToDoubleArray(charsB.get('?'))));	
-		krits.add(new Kriterium("\\char","!",listToDoubleArray(charsA.get('!')),listToDoubleArray(charsB.get('!'))));	
-		krits.add(new Kriterium("\\char","–",listToDoubleArray(charsA.get('–')),listToDoubleArray(charsB.get('–'))));	
+		//krits.add(new Kriterium("\\char","!",listToDoubleArray(charsA.get('!')),listToDoubleArray(charsB.get('!'))));	
+		//krits.add(new Kriterium("\\char","–",listToDoubleArray(charsA.get('–')),listToDoubleArray(charsB.get('–'))));	
 		krits.add(new Kriterium("\\char",":",listToDoubleArray(charsA.get(':')),listToDoubleArray(charsB.get(':'))));	
-		krits.add(new Kriterium("\\char",".",listToDoubleArray(charsA.get('.')),listToDoubleArray(charsB.get('.'))));	
+		//krits.add(new Kriterium("\\char",".",listToDoubleArray(charsA.get('.')),listToDoubleArray(charsB.get('.'))));	
 	}
 	
 	
-	private  Double[] listToDoubleArray(List<Integer> list){
+	private  Double[] listToDoubleArray(List<Double> list){
 		 Double[] out =new Double[list.size()];
 		 for(int i =0;i<list.size();i++){
-			 out[i]=Double.valueOf(list.get(i)+"");
+			 out[i]=list.get(i);
 			
 		 }
 		
@@ -177,7 +178,7 @@ public class TextClassification {
 					else{
 						temp=temp.toLowerCase();
 						if(wordsM.get(temp)==null)wordsM.put(temp, 0.0);		
-						wordsM.put(temp, wordsM.get(temp)+1);
+						wordsM.put(temp, wordsM.get(temp)+1.0/words.length);
 					}		
 				}
 			}
@@ -186,7 +187,7 @@ public class TextClassification {
 		String satzZeichen=test.replaceAll("[A-Za-z0-9\u00C0-\u00FF  ]", "");
 		for(char c:satzZeichen.toCharArray()){
 			if(charsM.get(c)==null)charsM.put(c,0.0);		
-			charsM.put(c, charsM.get(c)+1);
+			charsM.put(c, charsM.get(c)+1.0/satzZeichen.length());
 		}
 		//System.out.println(charsM.get('?'));
 		double a=-1.0;
