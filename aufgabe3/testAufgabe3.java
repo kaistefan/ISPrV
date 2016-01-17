@@ -5,6 +5,8 @@ import java.util.List;
 public class testAufgabe3 {
 	
 	public static void main(String[] args) {
+	String krit="\\s.length  ,\\char ?,\\char :";
+	
 	TxtFolderReader in = new TxtFolderReader ();
 	List<String> train =in.readFolder(args[0]);
 	TextClassification textcl =new TextClassification ();
@@ -12,7 +14,7 @@ public class testAufgabe3 {
 	List<String> train2 =in.readFolder(args[1]);
 	textcl.trainB(train2);
 	List<String> test =in.readFolder(args[2]);
-	textcl.creatCrit();
+	textcl.creatCriteria(krit);
 	double testFilm=0;
 	double testZeit=0;
 	double evalFilm=0;

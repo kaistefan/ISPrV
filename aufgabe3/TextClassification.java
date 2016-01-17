@@ -12,14 +12,17 @@ public class TextClassification {
 	private int [] totalSentencesA,totalSentencesB;
 	private Double [] sentenceLengtsA,sentenceLengtsB;
 	private int []totalWordsA,totalWordsB;
-	private int []totalCharsA,totalCharsB;
 	private HashMap<String, List<Double>> wordsA;
 	private HashMap<String,List<Double>> wordsB;
 	private HashMap<Character, List<Double>> charsA;
 	private HashMap<Character,List<Double>> charsB;
 	private int numberCountA,numberCountB;
-	private List<Kriterium> krits;
+	private List<Criterion> krits;
 	
+	/**
+	 * Analyse der Texte auf Wort/Zeichen Häufigkeiten und durchschnitt Statzlängen. Fuer die Kategorie A.
+	 * @param list Liste mit den zu trainieren Texten.
+	 */
 	void trainA(List<String> list){
 		totalTextA=0;
 		totalSentencesA=new int[list.size()];
@@ -72,10 +75,13 @@ public class TextClassification {
 			}
 			totalTextA++;
 		}
-		
 	}
+	
+	/**
+	 * Analyse der Texte auf Wort/Zeichen Häufigkeiten und durchschnitt Statzlängen. Fuer die Kategorie B.
+	 * @param list Liste mit den zu trainieren Texten.
+	 */
 	void trainB(List<String> list){
-
 		totalTextB=0;
 		totalSentencesB=new int[list.size()];
 		totalWordsB=new int[list.size()];
@@ -124,25 +130,39 @@ public class TextClassification {
 				}
 				charsB.get(c).add(totalTextB, charsB.get(c).get(totalTextB)+1.0/satzZeichen.length());
 				charsB.get(c).remove(totalTextB+1);
-			}
-			
+			}			
 			totalTextB++;
 		}
-		System.out.println(charsA);
-		System.out.println(charsB);
+	}
+
+	/**
+	 *  Erstellt die Kriterien.
+	 * @param arg 
+	 * 	Text der zur ueberpruefenden Merkmale: 
+	 *  fuer durchschnitts Satzlänge \\s.length, 
+	 *  fuer ein Wort \\word <?>,
+	 *  fuer ein Zeichen \\char <?>.
+	 * 	Mehere Merkmale werden mit , getrent.
+	 *  Beispiel:\\s.length  ,\\char ?,\\char ,,\\char :
+	 */
+	void creatCriteria(String arg){
+		krits=new ArrayList<Criterion>();
+		for(String temp:arg.split(",")){	
+			switch ( temp.split(" ")[0] ){
+			case "\\s.length": krits.add(new Criterion("\\s.length","",sentenceLengtsA,sentenceLengtsB));continue;
+			case "\\word" :krits.add(new Criterion("\\word",temp.split(" ")[1],listToDoubleArray(charsA.get(temp.split(" ")[1])),listToDoubleArray(charsB.get(temp.split(" ")[1]))));continue;	
+			case "\\char" :krits.add(new Criterion("\\char",temp.split(" ")[1],listToDoubleArray(charsA.get(temp.split(" ")[1].charAt(0))),listToDoubleArray(charsB.get(temp.split(" ")[1].charAt(0)))));continue;
+			}
+			
+		}
+		
 	}
 	
-	void creatCrit(){
-		krits=new ArrayList<Kriterium>();
-		krits.add(new Kriterium("\\s.length","",sentenceLengtsA,sentenceLengtsB));
-		krits.add(new Kriterium("\\char","?",listToDoubleArray(charsA.get('?')),listToDoubleArray(charsB.get('?'))));	
-		//krits.add(new Kriterium("\\char","!",listToDoubleArray(charsA.get('!')),listToDoubleArray(charsB.get('!'))));	
-		//krits.add(new Kriterium("\\char","–",listToDoubleArray(charsA.get('–')),listToDoubleArray(charsB.get('–'))));	
-		krits.add(new Kriterium("\\char",":",listToDoubleArray(charsA.get(':')),listToDoubleArray(charsB.get(':'))));	
-		//krits.add(new Kriterium("\\char",".",listToDoubleArray(charsA.get('.')),listToDoubleArray(charsB.get('.'))));	
-	}
-	
-	
+	/**
+	 * Wandelt eine Liste Mit Double werten in ein Double Array um.
+	 * @param list Mit Double werten
+	 * @return Double Array
+	 */
 	private  Double[] listToDoubleArray(List<Double> list){
 		 Double[] out =new Double[list.size()];
 		 for(int i =0;i<list.size();i++){
@@ -155,20 +175,20 @@ public class TextClassification {
 		
 	}
 	
-	
+	/**
+	 * Ueberprueft den Text anhand der geweahlten Kriterien. 
+	 * @param test Zu testender Text.
+	 * @return 0 wenn der Text zu Kategorie A gehört und 1 wenn er zu B gehört.
+	 */
 	int test(String test){
-		int totalSentences=0;
 		Double sentenceLengts=0.0;
-		int totalWords ;
 		int numberCount=0;
 		Map <Character,Double>charsM =new HashMap<Character,Double>();
 		Map <String,Double>wordsM=new HashMap<String,Double>();
 		String [] sentences=test.split("[.?!]");
-		totalSentences = sentences.length;
 		for(String sentenc :sentences){
 			sentenceLengts+=sentenc.length();
 			String [] words=sentenc.split("\\s");
-			totalWords= words.length;
 			for(String word :words){
 				String temp =word.replaceAll("[^A-Za-z0-9]", "");
 				if(!temp.equals("")){
@@ -189,31 +209,43 @@ public class TextClassification {
 			if(charsM.get(c)==null)charsM.put(c,0.0);		
 			charsM.put(c, charsM.get(c)+1.0/satzZeichen.length());
 		}
-		//System.out.println(charsM.get('?'));
 		double a=-1.0;
 		double b=-1.0;
-		
-		for(Kriterium krit:krits){
+		for(Criterion krit:krits){
 			Double[] temp;
 			switch ( krit.typ ) {
-			case "\\s.length"  : temp=krit.test((double) sentenceLengts);if(a==-1.0)a=temp[0];else a*=temp[0];if(b==-1.0)b=temp[1];else b*=temp[1];continue;
-			case "\\word" :temp=krit.test(wordsM.get(krit.item));if(a==-1.0)a=temp[0];else a*=temp[0];if(b==-1.0)b=temp[1];else b*=temp[1];continue;
-			case "\\char" :temp=krit.test(charsM.get(krit.item.charAt(0)));if(a==-1.0)a=temp[0];else a*=temp[0];if(b==-1.0)b=temp[1];else b*=temp[1];continue;
+				case "\\s.length"  : {
+					temp=krit.test((double) sentenceLengts);
+					if(a==-1.0)a=temp[0];
+					else a*=temp[0];
+					if(b==-1.0)b=temp[1];
+					else b*=temp[1];
+					continue;
+				}
+				case "\\word" :{
+					temp=krit.test(wordsM.get(krit.item));
+					if(a==-1.0)a=temp[0];
+					else a*=temp[0];
+					if(b==-1.0)b=temp[1];
+					else b*=temp[1];continue;
+				}
+				case "\\char" :{
+					temp=krit.test(charsM.get(krit.item.charAt(0)));
+					if(a==-1.0)a=temp[0];
+					else a*=temp[0];
+					if(b==-1.0)b=temp[1];
+					else b*=temp[1];
+					continue;
+				}
 			}
 		}
 		double isA=a/(a+b);
-		double isB=b/(a+b);
-		
+		double isB=b/(a+b);	
 		if(isA>=isB){
 			return 0;
 		}
 		else{
 			return 1;
-		}
-		
-		
-		
-		
-	}
-	
+		}	
+	}	
 }

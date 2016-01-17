@@ -1,12 +1,20 @@
 package aufgabe3;
 
 
-public class Kriterium {
+public class Criterion {
 	String typ;
 	String item;
 	Double [] a;
 	Double [] b;
-	public Kriterium(String typ,String item,Double [] a,Double [] b) {
+	
+	/**
+	 * 
+	 * @param typ Der Typ des Kriterium 
+	 * @param item 
+	 * @param a
+	 * @param b
+	 */
+	public Criterion(String typ,String item,Double [] a,Double [] b) {
 		// TODO Auto-generated constructor stub
 		this.typ=typ;
 		this.item=item;
@@ -16,6 +24,11 @@ public class Kriterium {
 		sort(b);
 		
 	}
+	
+	/**
+	 * 
+	 * @param s
+	 */
 	private void sort(Double [] s){
 		 for (int n=s.length; n>1; n=n-1){
 			    for (int i=0; i<n-1; i=i+1){
@@ -28,6 +41,11 @@ public class Kriterium {
 			  } // ende äußere for-Schleife
 	}
 	
+	/**
+	 * 
+	 * @param num
+	 * @return
+	 */
 	Double[]test(Double num){
 		if(num == null)num=0.0;
 		Double[] out={0.0,0.0};
@@ -65,6 +83,14 @@ public class Kriterium {
 
 		 return out;
 	}
+	
+	/**
+	 * 
+	 * @param min
+	 * @param max
+	 * @param a
+	 * @return
+	 */
 	 private double numberIn(Double min,Double max,Double[]a){
 		 double out=0.0;
 		 for(int i =0;i<a.length;i++){
