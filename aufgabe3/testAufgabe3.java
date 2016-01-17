@@ -6,7 +6,6 @@ public class testAufgabe3 {
 	
 	public static void main(String[] args) {
 	String krit="\\s.length  ,\\char ?,\\char :";
-	
 	TxtFolderReader in = new TxtFolderReader ();
 	List<String> train =in.readFolder(args[0]);
 	TextClassification textcl =new TextClassification ();
